@@ -26,8 +26,12 @@ todoRoutes.route("/").get(function(req, res) {
 });
 todoRoutes.route("/:id").get(function(req, res) {
   let id = req.params.id;
-  Todo.findById(id, function(err, res) {
-    res.json(id);
+  Todo.findById(id, function(err, todo) {
+    if (err) {
+      res.status(400).send("todo not found");
+    } else {
+      res.json(todo);
+    }
   });
 });
 todoRoutes.route("/add").post(function(req, res) {
